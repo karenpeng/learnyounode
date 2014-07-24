@@ -1,5 +1,6 @@
 // var sum = 0
 
+<<<<<<< HEAD
 // for(var i = 2; i < process.argv.length; i++){
 // 	sum += Number(process.argv[i])
 // }
@@ -12,11 +13,21 @@ var http = require('http')
 var bl = require('bl')
 
 //var fsFilter = require('./fsFilter')
+=======
+for (var i = 2; i < process.argv.length; i++) {
+  sum += Number(process.argv[i])
+}
+
+// var fs = require('fs')
+// var path = require('path')
+var fsFilter = require('./fsFilter')
+>>>>>>> 903dfb41efee6543dff27be8db9624e2e3dcc7c9
 
 //console.log(fs.readFileSync(process.argv[2]).toString().split('\n').length -1 )
 
 // fs.readFile(process.argv[2],function(err, data){
 // 	console.log(data.toString().split('\n').length -1 );
+<<<<<<< HEAD
 //  }) console.log(process.argv[2])
 
 // fs.readdir('../learnyounode', function(err, files){
@@ -59,3 +70,20 @@ http.get(url, function(res){
 	// 	console.log(data);
 	// })
 })
+=======
+//  })
+
+//console.log(process.argv[2])
+// fs.readdir(process.argv[2], function (err, files) {
+//   //console.log(files)
+//   for (var i = 0; i < files.length; i++) {
+//     if (path.extname(files[i]) === '.' + process.argv[3]) {
+//       console.log(files[i])
+//     }
+//   }
+// })
+
+fsFilter(process.argv[2], process.argv[3], function () {
+
+});
+>>>>>>> 903dfb41efee6543dff27be8db9624e2e3dcc7c9
