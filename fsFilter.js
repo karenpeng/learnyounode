@@ -9,18 +9,11 @@ fs.readdir(fileDir,function(err, list){
 		return callback(err)
 	}
 
-	else{
+	var result = list.filter(function (file){
+		return path.extname(file) === '.'+ extName
+	})
+	callback(null, result)
 
-		var data = function(){
-			for(var i = 0 ; i < list.length; i++){
-				if(path.extname(list[i]) === extName){
-			//console.log(list[i])
-		}
-	}
- }) 
-		}
-		callback(null, data);
-	}
-
+})
 
 }
