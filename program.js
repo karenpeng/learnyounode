@@ -9,6 +9,9 @@ var path = require('path')
 var http = require('http')
 var bl = require('bl')
 var async = require('async')
+var net = require('net')
+var map = require('through2-map')
+var url = require('url')
 
 //console.log(fs.readFileSync(process.argv[2]).toString().split('\n').length -1 )
 
@@ -18,9 +21,7 @@ var async = require('async')
 //  }) console.log(process.argv[2])
 
 // fs.readdir('../learnyounode', function(err, files){
-// 	//console.log(files)
-// 	console.log("CHANGELOG.md")
-// 	console.log("LICENCE.md")
+// 	//console.log(files)lea
 // 	for(var i = 0 ; i < files.length; i++){
 // 		if(path.extname(files[i]) === '.md'){
 // 			console.log(files[i])
@@ -78,51 +79,86 @@ http.get(url, function (res) {
 
 */
 
+/*
 var url = process.argv[2]
-		//console.log(process.argv[2])
-var result = [];
-//var i = 0;
-function getData(i, total) {
+
+function getData(i) {
 		http.get(process.argv[2 + i], function (res) {
 				res.setEncoding('utf8');
 				res.pipe(bl(function (err, data) {
-						//data.setEncoding('utf8')
-						//console.log(data.toString('utf8').length);
-						//console.log(data.toString('utf8'));
-						//return true;
-						//result.push(data.toString('utf8'));
+
 						console.log(data.toString('utf8'));
 						i++;
-						if (i < total) {
-								//console.log(data.toString('utf8'))
+						if (i < 3) {
 								getData(i);
-						} else {
-								for (var j = 0; j < result.length; j++) {
-										//	console.log(result[j])
-								}
-						}
-
+						} 
 				}));
 		})
 }
-getData(0, 3);
-// //async.series([
-// function queup() {
-// 		if (getData(process.argv[2])) {
-// 				if (getData(process.argv[3])) {
-// 						getData(process.argv[4])
-// 				}
-// 		}
+getData(0);
+*/
 
-// }
-// //])
+/*
+var date = new Date()
+function addZero(number){
+	if(number<10) return '0'+number
+		else return number
+}
+var data = date.getFullYear() +  "-" + addZero((date.getMonth()+1)) + "-" + addZero(date.getDate()) + " " 
+						+ addZero(date.getHours()) + ":" + addZero(date.getMinutes());
+//console.log(data)
+var server = net.createServer(function(socket){
+	//socket.write(data)
+	socket.end(data + '\n')
+})
+server.listen(Number(process.argv[2]));
+*/
 
-// async.series([
-// 		getData(process.argv[2]),
-// 		getData(process.argv[3]),
-// 		getData(process.argv[4])
-// ]);
+/*
+var server = http.createServer(function(req, res){
+	var src = fs.createReadStream(process.argv[3])
+	src.pipe(res)
+	// res.pipe(bl(function(err, data){
 
-//console.log(result)
+	// }))
+})
+server.listen(Number(process.argv[2]))
+*/
 
-// queup();
+
+/*
+var server = http.createServer(function(req, res){
+	req.pipe(map(function (chunk){
+		return chunk.toString().toUpperCase()
+	})).pipe(res)
+})
+server.listen(Number(process.argv[2]))
+*/
+var date = new Date()
+
+var data = {
+	"hour" : date.getHours(),
+	"minute" : date.getMinutes(),
+	"sechond" : date.getSeconds()
+}
+
+var finalData = JSON.stringify(data);
+console.log(finalData)
+
+var server = http.createServer(function(req, res){
+	if(req.method === 'GET'){
+		var p = url.parse(req.url, true)
+		if(p.pathname === '/api/parsetime'){
+			//console.log("d")
+			//res.writeHead(200, finalData)
+			//res = finalData
+			res.write(finalData)
+		}
+
+	}else{
+		console.log("give me a get request")
+	}
+})
+server.listen(Number(process.argv[2]))
+
+
