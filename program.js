@@ -134,31 +134,51 @@ var server = http.createServer(function(req, res){
 })
 server.listen(Number(process.argv[2]))
 */
-var date = new Date()
 
-var data = {
-	"hour" : date.getHours(),
-	"minute" : date.getMinutes(),
-	"sechond" : date.getSeconds()
+
+/*
+var getData = function(date){
+	return{
+		hour : date.getHours(),
+		minute : date.getMinutes(),
+		second : date.getSeconds()
+	}
 }
 
-var finalData = JSON.stringify(data);
-console.log(finalData)
+var getData2 = function(date){
+	return{
+		unixtime: date.getTime()
+	}
+}
+
+
 
 var server = http.createServer(function(req, res){
 	if(req.method === 'GET'){
 		var p = url.parse(req.url, true)
-		if(p.pathname === '/api/parsetime'){
-			//console.log("d")
-			//res.writeHead(200, finalData)
-			//res = finalData
-			res.write(finalData)
-		}
+		//console.log(p)
+		var time = new Date(p.query.iso);
+		var result;
+
+  if (/^\/api\/parsetime/.test(req.url))
+    result = getData(time)
+  else if (/^\/api\/unixtime/.test(req.url))
+    result = getData2(time)
+
+		var finalData = JSON.stringify(result);
+		// if(p.pathname === '/api/parsetime'){
+		// 	//console.log("d")
+		// 	//res.writeHead(200, finalData)
+		// 	//res = finalData
+		// 	var finalData = JSON.stringify(getData(p.));
+		//console.log(finalData)
+		 	res.write(finalData)
+		// }
 
 	}else{
 		console.log("give me a get request")
 	}
 })
 server.listen(Number(process.argv[2]))
-
+*/
 
