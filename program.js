@@ -91,7 +91,7 @@ function getData(i) {
 						i++;
 						if (i < 3) {
 								getData(i);
-						} 
+						}
 				}));
 		})
 }
@@ -100,65 +100,74 @@ getData(0);
 
 /*
 var date = new Date()
-function addZero(number){
-	if(number<10) return '0'+number
+
+function addZero(number) {
+		if (number < 10) return '0' + number
 		else return number
 }
-var data = date.getFullYear() +  "-" + addZero((date.getMonth()+1)) + "-" + addZero(date.getDate()) + " " 
-						+ addZero(date.getHours()) + ":" + addZero(date.getMinutes());
+var data = date.getFullYear() + "-" + addZero((date.getMonth() + 1)) + "-" +
+		addZero(date.getDate()) + " " + addZero(date.getHours()) + ":" + addZero(date
+				.getMinutes());
 //console.log(data)
-var server = net.createServer(function(socket){
-	//socket.write(data)
-	socket.end(data + '\n')
+var server = net.createServer(function (socket) {
+		//socket.write(data)
+		socket.end(data + '\n')
 })
 server.listen(Number(process.argv[2]));
 */
 
 /*
-var server = http.createServer(function(req, res){
-	var src = fs.createReadStream(process.argv[3])
-	src.pipe(res)
-	// res.pipe(bl(function(err, data){
+var server = http.createServer(function (req, res) {
+		var src = fs.createReadStream(process.argv[3])
+		src.pipe(res)
+		// res.pipe(bl(function(err, data){
 
-	// }))
+		// }))
 })
 server.listen(Number(process.argv[2]))
 */
-
 
 /*
-var server = http.createServer(function(req, res){
-	req.pipe(map(function (chunk){
-		return chunk.toString().toUpperCase()
-	})).pipe(res)
+var server = http.createServer(function (req, res) {
+		req.pipe(map(function (chunk) {
+				return chunk.toString().toUpperCase()
+		})).pipe(res)
 })
 server.listen(Number(process.argv[2]))
 */
-var date = new Date()
 
-var data = {
-	"hour" : date.getHours(),
-	"minute" : date.getMinutes(),
-	"sechond" : date.getSeconds()
+// var date = new Date()
+
+// var data = {
+// 		"hour": date.getHours(),
+// 		"minute": date.getMinutes(),
+// 		"sechond": date.getSeconds()
+// }
+
+function returnDate(date) {
+  var data = {
+    "hour": date.getHours(),
+    "minute": date.getMinutes(),
+    "sechond": date.getSeconds()
+  };
+  return data;
 }
 
 var finalData = JSON.stringify(data);
 console.log(finalData)
 
-var server = http.createServer(function(req, res){
-	if(req.method === 'GET'){
-		var p = url.parse(req.url, true)
-		if(p.pathname === '/api/parsetime'){
-			//console.log("d")
-			//res.writeHead(200, finalData)
-			//res = finalData
-			res.write(finalData)
-		}
+var server = http.createServer(function (req, res) {
+  if (req.method === 'GET') {
+    var p = url.parse(req.url, true)
+    if (p.pathname === '/api/parsetime') {
+      //console.log("d")
+      //res.writeHead(200, finalData)
+      //res = finalData
+      res.end()
+    }
 
-	}else{
-		console.log("give me a get request")
-	}
+  } else {
+    console.log("give me a get request")
+  }
 })
 server.listen(Number(process.argv[2]))
-
-
